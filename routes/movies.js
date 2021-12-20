@@ -27,7 +27,7 @@ router.post('/', celebrate({
     {
       country: Joi.string().trim().required(),
       director: Joi.string().trim().required(),
-      duration: Joi.number().trim().required(),
+      duration: Joi.number().required(),
       year: Joi.string().trim().required(),
       description: Joi.string().trim().required(),
       // movieId: Joi.string().alphanum().length(24).hex(),
