@@ -42,8 +42,7 @@ app.use(errorLogger);
 
 app.use(errors());
 
-// eslint-disable-next-line
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   const { statusCode = 500, message = 'Произошла непредвиденная ошибка на сервере.' } = err;
   return res.status(statusCode).send({
     message,

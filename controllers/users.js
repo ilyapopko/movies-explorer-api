@@ -21,9 +21,7 @@ const login = (req, res, next) => {
       });
       res.cookie('token', token, {
         maxAge: 3600000 * 24 * 7,
-        // httpOnly: true,
-        // sameSite: 'none',
-        // secure: true,
+        httpOnly: true,
       }).send({
         token,
         user: dataUser(user),
@@ -35,9 +33,7 @@ const login = (req, res, next) => {
 const logout = (req, res, next) => {
   try {
     res.clearCookie('token', {
-      // httpOnly: true,
-      // sameSite: 'none',
-      // secure: true,
+      httpOnly: true,
     })
       .send({
         message: 'Вы вышли из профиля',
@@ -94,7 +90,6 @@ const updateProfile = (req, res, next) => {
     });
 };
 
-// Удалить после тестирования
 const getUsers = (req, res, next) => {
   User.find({
   })

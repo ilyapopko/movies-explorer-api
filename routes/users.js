@@ -21,7 +21,6 @@ router.patch('/me', celebrate({
   ),
 }), updateProfile);
 
-// Удалить после тестирования
 router.get('/', getUsers);
 
 module.exports = router;

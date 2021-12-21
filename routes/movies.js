@@ -18,10 +18,6 @@ const { getMovies, addMovie, deleteMovie } = require('../controllers/movies');
 
 router.get('/', getMovies);
 
-// Вопросы:
-// duration - целое или нет число? если дробное то какие параметры
-// nameRU - нужно проверять на русские буквы
-// nameEN - нужно проверять на английские буквы
 router.post('/', celebrate({
   body: Joi.object().keys(
     {

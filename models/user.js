@@ -3,14 +3,6 @@ const bcrypt = require('bcryptjs');
 const validator = require('../utils/validation');
 const { CastomizedError, errorCodes, errorMessages } = require('../utils/errors');
 
-// email — почта пользователя, по которой он регистрируется.
-// Это обязательное поле, уникальное для каждого пользователя.
-// Также оно должно валидироваться на соответствие схеме электронной почты.
-// password — хеш пароля. Обязательное поле-строка.
-// Нужно задать поведение по умолчанию, чтобы база данных не возвращала это поле.
-// name — имя пользователя, например: Александр или Мария.
-// Это обязательное поле-строка от 2 до 30 символов.
-
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
