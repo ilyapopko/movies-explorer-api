@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-// const cors = require('cors');
+const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { CastomizedError, errorCodes, errorMessages } = require('./utils/errors');
 const routes = require('./routes');
@@ -15,13 +15,14 @@ mongoose.connect('mongodb://127.0.0.1:27017/moviesdb');
 
 const app = express();
 
-// app.use('*', cors({
-//   origin: [
-//     /^https?:\/\/mesto-ilyap.students.nomoredomains.rocks/,
-//     'http://localhost:3000',
-//   ],
-//   credentials: true,
-// }));
+app.use('*', cors({
+  origin: [
+    /^https?:\/\/movies-explorer-popko.nomoredomains.rocks/,
+    'http://localhost:3000',
+    'http://localhost',
+  ],
+  credentials: true,
+}));
 
 app.use(helmet());
 

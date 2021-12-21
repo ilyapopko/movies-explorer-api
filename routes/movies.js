@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { Joi, celebrate } = require('celebrate');
-// const { regex } = require('../utils/validation');
+const { regex } = require('../utils/validation');
 
 // # возвращает все сохранённые текущим  пользователем фильмы
 // GET /movies
@@ -30,14 +30,10 @@ router.post('/', celebrate({
       duration: Joi.number().required(),
       year: Joi.string().trim().required(),
       description: Joi.string().trim().required(),
-      // movieId: Joi.string().alphanum().length(24).hex(),
-      movieId: Joi.string().trim().required(),
-      // image: Joi.string().trim().required().pattern(regex),
-      // trailer: Joi.string().trim().required().pattern(regex),
-      // thumbnail: Joi.string().trim().required().pattern(regex),
-      image: Joi.string().trim().required(),
-      trailer: Joi.string().trim().required(),
-      thumbnail: Joi.string().trim().required(),
+      movieId: Joi.number().required(),
+      image: Joi.string().trim().required().pattern(regex),
+      trailer: Joi.string().trim().required().pattern(regex),
+      thumbnail: Joi.string().trim().required().pattern(regex),
       nameRU: Joi.string().trim().required(),
       nameEN: Joi.string().trim().required(),
     },
@@ -47,7 +43,7 @@ router.post('/', celebrate({
 router.delete('/:movieId', celebrate({
   params: Joi.object().keys(
     {
-      movieId: Joi.string().alphanum().length(24).hex(),
+      movieId: Joi.number().required(),
     },
   ),
 }), deleteMovie);

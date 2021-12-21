@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('../utils/validation');
-// const { defaultUserValues } = require('../utils/constants');
 const { CastomizedError, errorCodes, errorMessages } = require('../utils/errors');
 
 // email — почта пользователя, по которой он регистрируется.
@@ -31,7 +30,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: [2, 'Поле "name" должно быть не менее 2 символов.'],
     maxlength: [30, 'Поле "name" должно быть не более 30 символов.'],
-    // default: defaultUserValues.name,
   },
 });
 

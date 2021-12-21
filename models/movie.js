@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const validator = require('../utils/validation');
+const validator = require('../utils/validation');
 
 // country — страна создания фильма. Обязательное поле-строка.
 // director — режиссёр фильма. Обязательное поле-строка.
@@ -39,57 +39,43 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     required: [true, 'Поле "image" обязательно для заполнения.'],
-    // validate: {
-    //   validator: validator.isUrl,
-    //   message: 'Поле "link" не соответствует правилам составления url',
-    // },
+    validate: {
+      validator: validator.isUrl,
+      message: 'Поле "link" не соответствует правилам составления url',
+    },
   },
   trailer: {
     type: String,
     required: [true, 'Поле "trailer" обязательно для заполнения.'],
-    // validate: {
-    //   validator: validator.isUrl,
-    //   message: 'Поле "link" не соответствует правилам составления url',
-    // },
+    validate: {
+      validator: validator.isUrl,
+      message: 'Поле "link" не соответствует правилам составления url',
+    },
   },
   thumbnail: {
     type: String,
     required: [true, 'Поле "thumbnail" обязательно для заполнения.'],
-    // validate: {
-    //   validator: validator.isUrl,
-    //   message: 'Поле "link" не соответствует правилам составления url',
-    // },
+    validate: {
+      validator: validator.isUrl,
+      message: 'Поле "link" не соответствует правилам составления url',
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: true,
   },
-  // movieId: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   required: [true, 'Поле "movieId" обязательно для заполнения.'],
-  // },
   movieId: {
-    type: String,
+    type: Number,
     required: [true, 'Поле "movieId" обязательно для заполнения.'],
   },
   nameRU: {
     type: String,
     required: [true, 'Поле "nameRU" обязательно для заполнения.'],
-    // validate: {
-    //   validator: validator.isRuStr,
-    //   // Переделать на другое рег. выражение
-    //   message: 'Поле "nameRU" не соответствует правилам составления url',
-    // },
   },
   nameEN: {
     type: String,
     required: [true, 'Поле "nameEN" обязательно для заполнения.'],
-    // validate: {
-    //   validator: validator.isEnStr,
-    //   // Переделать на другое рег. выражение
-    //   message: 'Поле "nameEN" не соответствует правилам составления url',
-    // },
   },
 });
 
