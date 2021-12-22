@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-// const { CastomizedError, errorCodes, errorMessages } = require('./utils/errors');
 const routes = require('./routes');
 
 const { PORT = 3000, NODE_ENV, DB_BASE_URL } = process.env;
@@ -32,11 +31,7 @@ app.use(express.json());
 
 app.use(requestLogger);
 
-app.use(routes);
-
-// app.all('/*', () => {
-//   throw new CastomizedError(errorCodes.notFound, errorMessages.urlNotFound);
-// });
+app.use('/api/', routes);
 
 app.use(errorLogger);
 
