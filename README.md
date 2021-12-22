@@ -1,7 +1,7 @@
 # movies-explorer-api
 
-backend movies-explorer
-
+## Обзор
+Дипломная работа для Яндекс.Практикума. Этап 2: бэкенд
 ## URL (на Yandex.cloud)
 * https://movies-explorer-popko.nomoredomains.rocks/api
 
