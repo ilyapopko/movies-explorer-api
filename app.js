@@ -7,6 +7,7 @@ const { errors } = require('celebrate');
 const { appCors } = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { centralErrorHandler } = require('./utils/errors');
+const { customLimitRate } = require('./middlewares/limitrate');
 
 const routes = require('./routes');
 
@@ -17,6 +18,8 @@ mongoose.connect(NODE_ENV === 'production' ? DB_BASE_URL : 'mongodb://127.0.0.1:
 const app = express();
 
 app.use('*', appCors);
+
+app.use(customLimitRate);
 
 app.use(helmet());
 
