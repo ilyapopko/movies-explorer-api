@@ -6,12 +6,12 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { CastomizedError, errorCodes, errorMessages } = require('./utils/errors');
+// const { CastomizedError, errorCodes, errorMessages } = require('./utils/errors');
 const routes = require('./routes');
 
-const { PORT = 5000 } = process.env;
+const { PORT = 3000, NODE_ENV, DB_BASE_URL } = process.env;
 
-mongoose.connect('mongodb://127.0.0.1:27017/moviesdb');
+mongoose.connect(NODE_ENV === 'production' ? DB_BASE_URL : 'mongodb://127.0.0.1:27017/moviesdb');
 
 const app = express();
 
@@ -34,9 +34,9 @@ app.use(requestLogger);
 
 app.use(routes);
 
-app.all('/*', () => {
-  throw new CastomizedError(errorCodes.notFound, errorMessages.urlNotFound);
-});
+// app.all('/*', () => {
+//   throw new CastomizedError(errorCodes.notFound, errorMessages.urlNotFound);
+// });
 
 app.use(errorLogger);
 

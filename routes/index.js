@@ -3,11 +3,12 @@ const { celebrate, Joi } = require('celebrate');
 
 const auth = require('../middlewares/auth');
 const { login, logout, createUser } = require('../controllers/users');
+const { CastomizedError, errorCodes, errorMessages } = require('../utils/errors');
 
 const usersRouter = require('./users');
 const moviesRouter = require('./movies');
 
-router.post('/api/signin', celebrate({
+router.post('/signin', celebrate({
   body: Joi.object().keys(
     {
       email: Joi.string().trim().email().required(),
@@ -16,7 +17,7 @@ router.post('/api/signin', celebrate({
   ),
 }), login);
 
-router.post('/api/signup', celebrate({
+router.post('/signup', celebrate({
   body: Joi.object().keys(
     {
       email: Joi.string().trim().email().required(),
@@ -26,9 +27,12 @@ router.post('/api/signup', celebrate({
   ),
 }), createUser);
 
-router.get('/api/signout', logout);
+router.get('/signout', auth, logout);
+router.use('/users', auth, usersRouter);
+router.use('/movies', auth, moviesRouter);
 
-router.use('/api/users', auth, usersRouter);
-router.use('/api/movies', auth, moviesRouter);
+router.all('/*', () => {
+  throw new CastomizedError(errorCodes.notFound, errorMessages.urlNotFound);
+});
 
 module.exports = router;
