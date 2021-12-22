@@ -12,7 +12,7 @@ router.get('/signout', auth, logout);
 router.use('/users', auth, usersRouter);
 router.use('/movies', auth, moviesRouter);
 
-router.all('/api/*', () => {
+router.all('/*', () => {
   throw new CastomizedError(errorCodes.notFound, errorMessages.urlNotFound);
 });
 

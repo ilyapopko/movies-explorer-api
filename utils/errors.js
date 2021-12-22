@@ -35,8 +35,19 @@ const errorMessages = {
   conflictEmail: 'Пользователь с таким email уже существует.', // 409
 };
 
+const centralErrorHandler = (err, req, res, next) => {
+  const { statusCode = 500, message = 'Произошла непредвиденная ошибка на сервере.' } = err;
+
+  res.status(statusCode).send({
+    message,
+  });
+
+  next();
+};
+
 module.exports = {
   CastomizedError,
   errorCodes,
   errorMessages,
+  centralErrorHandler,
 };
