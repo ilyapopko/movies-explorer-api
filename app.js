@@ -29,7 +29,7 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.use('/api/', routes);
+app.use('/', routes);
 
 app.use(errorLogger);
 

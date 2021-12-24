@@ -6,13 +6,13 @@ const { signinValidation, signupValidation } = require('../utils/validation');
 const usersRouter = require('./users');
 const moviesRouter = require('./movies');
 
-router.post('/signin', signinValidation, login);
-router.post('/signup', signupValidation, createUser);
-router.get('/signout', auth, logout);
-router.use('/users', auth, usersRouter);
-router.use('/movies', auth, moviesRouter);
+router.post('/api/signin', signinValidation, login);
+router.post('/api/signup', signupValidation, createUser);
+router.get('/api/signout', auth, logout);
+router.use('/api/users', auth, usersRouter);
+router.use('/api/movies', auth, moviesRouter);
 
-router.all('/*', () => {
+router.all('/*', auth, () => {
   throw new CastomizedError(errorCodes.notFound, errorMessages.urlNotFound);
 });
 
