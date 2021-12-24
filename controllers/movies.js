@@ -3,8 +3,7 @@ const Movie = require('../models/movie');
 const { CastomizedError, errorCodes, errorMessages } = require('../utils/errors');
 
 const getMovies = (req, res, next) => {
-  Movie.find({
-  })
+  Movie.find({ owner: req.user._id })
     .then((movies) => res.send(movies.map((movie) => movie)))
     .catch(next);
 };
