@@ -5,7 +5,6 @@ const { CastomizedError, errorCodes, errorMessages } = require('../utils/errors'
 const getMovies = (req, res, next) => {
   Movie.find({
   })
-    .populate(['owner'])
     .then((movies) => res.send(movies.map((movie) => movie)))
     .catch(next);
 };
@@ -49,7 +48,7 @@ const deleteMovie = (req, res, next) => {
       if (!movie.owner._id.equals(new ObjectId(req.user._id))) {
         throw new CastomizedError(errorCodes.forbidden, errorMessages.forbidden);
       }
-      Movie.findByIdAndRemove(req.params.movieId)
+      return Movie.findByIdAndRemove(req.params.movieId)
         .then(() => res.send({
           message: 'Фильм удален из списка',
         }));

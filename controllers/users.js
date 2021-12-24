@@ -82,7 +82,9 @@ const updateProfile = (req, res, next) => {
     })
     .then((user) => res.send(dataUser(user)))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.code === 11000) {
+        next(new CastomizedError(errorCodes.conflict, errorMessages.conflictEmail));
+      } else if (err.name === 'ValidationError') {
         next(new CastomizedError(errorCodes.badRequest, err.message));
       } else {
         next(err);

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const validator = require('../utils/validation');
+const isURL = require('validator/lib/isURL');
 
 // country — страна создания фильма. Обязательное поле-строка.
 // director — режиссёр фильма. Обязательное поле-строка.
@@ -40,25 +40,32 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Поле "image" обязательно для заполнения.'],
     validate: {
-      validator: validator.isUrl,
-      message: 'Поле "link" не соответствует правилам составления url',
+      validator(v) {
+        return isURL(v);
+      },
+      message: 'Поле "image" не соответствует правилам составления url',
     },
   },
   trailer: {
     type: String,
     required: [true, 'Поле "trailer" обязательно для заполнения.'],
     validate: {
-      validator: validator.isUrl,
-      message: 'Поле "link" не соответствует правилам составления url',
+      validator(v) {
+        return isURL(v);
+      },
+      message: 'Поле "trailer" не соответствует правилам составления url',
     },
   },
   thumbnail: {
     type: String,
     required: [true, 'Поле "thumbnail" обязательно для заполнения.'],
     validate: {
-      validator: validator.isUrl,
-      message: 'Поле "link" не соответствует правилам составления url',
+      validator(v) {
+        return isURL(v);
+      },
+      message: 'Поле "thumbnail" не соответствует правилам составления url',
     },
+
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

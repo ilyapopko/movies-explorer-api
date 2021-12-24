@@ -19,6 +19,8 @@ const app = express();
 
 app.use('*', appCors);
 
+app.use(requestLogger);
+
 app.use(customLimitRate);
 
 app.use(helmet());
@@ -26,8 +28,6 @@ app.use(helmet());
 app.use(cookieParser());
 
 app.use(express.json());
-
-app.use(requestLogger);
 
 app.use('/api/', routes);
 

@@ -1,9 +1,12 @@
 const isEmail = require('validator/lib/isEmail');
-const { celebrate, Joi } = require('celebrate');
+const isURL = require('validator/lib/isURL');
+const { celebrate, Joi, CelebrateError } = require('celebrate');
+const { errorMessages } = require('./errors');
 
-const regex = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.,~#?&//=!]*$)/;
-
-const isUrl = (str) => regex.test(str);
+const validUrl = (url) => {
+  if (!isURL(url)) throw new CelebrateError(`${url} ${errorMessages.badUrl}`);
+  return url;
+};
 
 const signinValidation = celebrate({
   body: Joi.object().keys(
@@ -43,9 +46,9 @@ const postMovieValidation = celebrate({
       year: Joi.string().trim().required(),
       description: Joi.string().trim().required(),
       movieId: Joi.number().required(),
-      image: Joi.string().trim().required().pattern(regex),
-      trailer: Joi.string().trim().required().pattern(regex),
-      thumbnail: Joi.string().trim().required().pattern(regex),
+      image: Joi.string().trim().required().custom(validUrl),
+      trailer: Joi.string().trim().required().custom(validUrl),
+      thumbnail: Joi.string().trim().required().custom(validUrl),
       nameRU: Joi.string().trim().required(),
       nameEN: Joi.string().trim().required(),
     },
@@ -55,14 +58,14 @@ const postMovieValidation = celebrate({
 const delMovieValidation = celebrate({
   params: Joi.object().keys(
     {
-      movieId: Joi.number().required(),
+      movieId: Joi.string().alphanum().length(24).hex(),
     },
   ),
 });
 
 module.exports = {
   isEmail,
-  isUrl,
+  // isUrl,
   signinValidation,
   signupValidation,
   patchUserValidation,
