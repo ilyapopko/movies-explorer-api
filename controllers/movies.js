@@ -2,9 +2,24 @@ const { ObjectId } = require('mongodb');
 const Movie = require('../models/movie');
 const { CastomizedError, errorCodes, errorMessages } = require('../utils/errors');
 
+const formatMovie = (movie) => ({
+  movieId: movie.movieId,
+  saveId: movie._id,
+  country: movie.country,
+  director: movie.director,
+  duration: movie.duration,
+  year: movie.year,
+  description: movie.description,
+  image: movie.image,
+  trailer: movie.trailer,
+  nameRU: movie.nameRU,
+  nameEN: movie.nameEN,
+  thumbnail: movie.thumbnail,
+});
+
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
-    .then((movies) => res.send(movies.map((movie) => movie)))
+    .then((movies) => res.send(movies.map((movie) => formatMovie(movie))))
     .catch(next);
 };
 
@@ -28,20 +43,7 @@ const addMovie = (req, res, next) => {
     movieId,
     owner: req.user._id,
   })
-    .then((movie) => res.send({
-      movieId: movie.movieId,
-      saveId: movie._id,
-      country: movie.country,
-      director: movie.director,
-      duration: movie.duration,
-      year: movie.year,
-      description: movie.description,
-      image: movie.image,
-      trailer: movie.trailer,
-      nameRU: movie.nameRU,
-      nameEN: movie.nameEN,
-      thumbnail: movie.thumbnail,
-    }))
+    .then((movie) => res.send(formatMovie(movie)))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new CastomizedError(errorCodes.badRequest, err.message));
