@@ -36,6 +36,8 @@ const logout = (req, res, next) => {
   try {
     res.clearCookie('token', {
       httpOnly: true,
+      sameSite: 'none',
+      secure: true,
     })
       .send({
         message: 'Вы вышли из профиля',
